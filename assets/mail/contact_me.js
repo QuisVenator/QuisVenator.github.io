@@ -19,6 +19,22 @@ $(function() {
       }
       $this = $("#sendMessageButton");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
+      /**/
+      fetch("https://renepauls-mailer.glitch.me/sendMail", {
+        crossDomain: true,
+        method: "POST",
+        body: JSON.stringify({
+          reply: name,
+          subject: "Personal Page Contact Form",
+          content: name+" schreibt:\n"+message+"\n\nAls Kontaktdaten wurden Telefonnummer: "+phone+" und Email: "+email+" angegeben."
+        }),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.json())
+      .then(response => {
+        console.log(response.msg);
+      });
+      /*
       $.ajax({
         url: "https://renepauls-mailer.glitch.me/sendMail",
         crossDomain: true,
@@ -58,6 +74,7 @@ $(function() {
           }, 1000);
         }
       });
+      */
     },
     filter: function() {
       return $(this).is(":visible");
