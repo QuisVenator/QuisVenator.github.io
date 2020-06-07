@@ -28,14 +28,28 @@ $(function() {
           subject: "Personal Page Contact Form",
           content: name+" schreibt:\n"+message+"\n\nAls Kontaktdaten wurden Telefonnummer: "+phone+" und Email: "+email+" angegeben."
         }),
-        headers: { "Content-Type": "application/json" }
+        headers : { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+         }
       })
-      .then(res => res.json())
-      .then(response => {
-        if(!response.ok) {
+      .then(res => {
+        if(!res.ok) {
           throw new Error("Server responded with: " + response.status);
         }
-        console.log(response.msg);
+        return res.json();
+      })
+      .then(response => {
+        // Success message
+        $('#success').html("<div class='alert alert-success'>");
+        $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+          .append("</button>");
+        $('#success > .alert-success')
+          .append("<strong>Nachricht wurde gesendet. </strong>");
+        $('#success > .alert-success')
+          .append('</div>');
+        //clear all fields
+        $('#contactForm').trigger("reset");
       })
       .catch(error => {
         console.error("Failed sending message. Error: "+error)
@@ -45,8 +59,11 @@ $(function() {
           .append("</button>");
         $('#success > .alert-danger').append($("<strong>").text("Entschuldige bitte " + firstName + ", aber da ist wohl etwas schiefgelaufen. Bitte versuche es später erneut oder kontaktiere mich direkt!"));
         $('#success > .alert-danger').append('</div>');
-        //clear all fields
-        $('#contactForm').trigger("reset");
+      })
+      .finally(()=>{
+        setTimeout(function() {
+          $this.prop("disabled", false); // Re-enable submit button when AJAX call is complete
+        }, 1000);
       });
     },
     filter: function() {
