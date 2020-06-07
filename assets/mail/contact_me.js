@@ -32,49 +32,22 @@ $(function() {
       })
       .then(res => res.json())
       .then(response => {
-        console.log(response.msg);
-      });
-      /*
-      $.ajax({
-        url: "https://renepauls-mailer.glitch.me/sendMail",
-        crossDomain: true,
-        type: "POST",
-        data: {
-          reply: name,
-          subject: "Personal Page Contact Form",
-          text: name+" schreibt:\n"+message+"\n\nAls Kontaktdaten wurden Telefonnummer: "+phone+" und Email: "+email+" angegeben."
-        },
-        cache: false,
-        success: function() {
-          // Success message
-          $('#success').html("<div class='alert alert-success'>");
-          $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-            .append("</button>");
-          $('#success > .alert-success')
-            .append("<strong>Ihre Nachricht wurde erfolgreich gesendet. </strong>");
-          $('#success > .alert-success')
-            .append('</div>');
-          //clear all fields
-          $('#contactForm').trigger("reset");
-        },
-        error: function(xhr, status, error) {
-          console.log(xhr.responseText);
-          // Fail message
-          $('#success').html("<div class='alert alert-danger'>");
-          $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-            .append("</button>");
-          $('#success > .alert-danger').append($("<strong>").text("Entschuldige bitte " + firstName + ", aber da ist wohl etwas schiefgelaufen. Bitte versuche es später erneut oder kontaktiere mich direkt!"));
-          $('#success > .alert-danger').append('</div>');
-          //clear all fields
-          $('#contactForm').trigger("reset");
-        },
-        complete: function() {
-          setTimeout(function() {
-            $this.prop("disabled", false); // Re-enable submit button when AJAX call is complete
-          }, 1000);
+        if(!response.ok) {
+          throw new Error("Server responded with: " + response.status);
         }
+        console.log(response.msg);
+      })
+      .catch(error => {
+        console.error("Failed sending message. Error: "+error)
+        // Fail message
+        $('#success').html("<div class='alert alert-danger'>");
+        $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+          .append("</button>");
+        $('#success > .alert-danger').append($("<strong>").text("Entschuldige bitte " + firstName + ", aber da ist wohl etwas schiefgelaufen. Bitte versuche es später erneut oder kontaktiere mich direkt!"));
+        $('#success > .alert-danger').append('</div>');
+        //clear all fields
+        $('#contactForm').trigger("reset");
       });
-      */
     },
     filter: function() {
       return $(this).is(":visible");
