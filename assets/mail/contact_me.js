@@ -20,7 +20,7 @@ $(function() {
       $this = $("#sendMessageButton");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
       $.ajax({
-        url: "renepauls-mailer.glitch.me/sendMail",
+        url: "https://renepauls-mailer.glitch.me/sendMail",
         crossDomain: true,
         type: "POST",
         data: {
