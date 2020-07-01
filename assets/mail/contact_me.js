@@ -26,7 +26,8 @@ $(function() {
         body: JSON.stringify({
           reply: name,
           subject: "Personal Page Contact Form",
-          content: name+" schreibt:\n"+message+"\n\nAls Kontaktdaten wurden Telefonnummer: "+phone+" und Email: "+email+" angegeben."
+          content: name+" schreibt:\n"+message+"\n\nAls Kontaktdaten wurden Telefonnummer: "+phone+" und Email: "+email+" angegeben.",
+          mailKey: "5db1fee4b5703808c48078a76768b155b421b210c0761cd6a5d223f4d99f1eaa"
         }),
         headers : { 
           'Content-Type': 'application/json',
