@@ -20,25 +20,13 @@ $(function() {
       $this = $("#sendMessageButton");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
       /**/
-      fetch("https://renepauls-mailer.glitch.me/sendMail", {
-        crossDomain: true,
-        method: "POST",
-        body: JSON.stringify({
-          reply: name,
-          subject: "Personal Page Contact Form",
-          content: name+" schreibt:\n"+message+"\n\nAls Kontaktdaten wurden Telefonnummer: "+phone+" und Email: "+email+" angegeben.",
-          mailKey: "5db1fee4b5703808c48078a76768b155b421b210c0761cd6a5d223f4d99f1eaa"
-        }),
-        headers : { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-         }
-      })
-      .then(res => {
-        if(!res.ok) {
-          throw new Error("Server responded with: " + response.status);
+      var data = new FormData(event.target);
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
         }
-        return res.json();
       })
       .then(response => {
         // Success message
