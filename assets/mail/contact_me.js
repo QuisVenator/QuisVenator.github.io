@@ -22,7 +22,7 @@ $(function() {
       /**/
       var data = new FormData(event.target);
       fetch(event.target.action, {
-        method: form.method,
+        method: "post",
         body: data,
         headers: {
             'Accept': 'application/json'
